@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 
 # Environments
-myenv
+myenv/
 .env
-_pychache_
+__pychache__/
