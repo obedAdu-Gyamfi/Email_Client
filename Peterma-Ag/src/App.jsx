@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from './assets/logo.png'
 
 export default function EmailSender() {
   const [form, setForm] = useState({
@@ -56,49 +57,57 @@ export default function EmailSender() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 flex justify-center">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">SMTP Email Sender</h1>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          {Object.keys(form).map((key) => (
-            <div key={key}>
-              <label className="block font-semibold mb-1 capitalize">{key}</label>
+    <div>
+      <div className="bg-blue-400 flex h-24">
+        <img className="w-32 h-22" src={logo} alt="logo" />
+        <p className="text-3xl font-bold pt-5 text-white"> PATERMA-AG ENTERPRISE</p>
+      </div>
+      <div className="min-h-screen bg-gray-100 p-8 flex justify-center">
+        <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
+          <h1 className="text-3xl font-bold mb-6 text-center">SMTP Email Sender</h1>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {Object.keys(form).map((key) => (
+              <div key={key}>
+                <label className="block font-semibold mb-1 capitalize">{key}</label>
+                <input
+                  type="text"
+                  name={key}
+                  value={form[key]}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-lg"
+                />
+              </div>
+            ))}
+
+            <div>
+              <label className="block font-semibold mb-1">Attachments</label>
               <input
-                type="text"
-                name={key}
-                value={form[key]}
-                onChange={handleChange}
+                type="file"
+                multiple
+                onChange={handleFileChange}
                 className="w-full p-2 border rounded-lg"
               />
             </div>
-          ))}
 
-          <div>
-            <label className="block font-semibold mb-1">Attachments</label>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              className="w-full p-2 border rounded-lg"
-            />
-          </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold"
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send Email"}
+            </button>
+          </form>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold"
-            disabled={loading}
-          >
-            {loading ? "Sending..." : "Send Email"}
-          </button>
-        </form>
-
-        {result && (
-          <pre className="mt-6 bg-gray-900 text-green-400 p-4 rounded-xl text-sm overflow-auto">
-            {result}
-          </pre>
-        )}
+          {result && (
+            <pre className="mt-6 bg-gray-900 text-green-400 p-4 rounded-xl text-sm overflow-auto">
+              {result}
+            </pre>
+          )}
+        </div>
       </div>
     </div>
+
   );
 }
