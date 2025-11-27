@@ -29,15 +29,15 @@ export default function EmailSender() {
 
     const formData = new FormData();
 
-    formData.append("sender ", form.sender);
-    formData.append("receiver ", form.receiver);
-    formData.append("subject ", form.subject);
-    formData.append("body ", form.body);
-    formData.append("cc ", form.cc);
-    formData.append("bcc ", form.bcc);
+    formData.append("sender", form.sender);
+    formData.append("receiver", form.receiver);
+    formData.append("subject", form.subject);
+    formData.append("body", form.body);
+    formData.append("cc", form.cc);
+    formData.append("bcc", form.bcc);
 
     attachments.forEach((file) => {
-      formData.append("attachments ", file);
+      formData.append("attachments", file);
     });
 
     try {
@@ -58,9 +58,7 @@ export default function EmailSender() {
   return (
     <div className="min-h-screen bg-gray-100 p-8 flex justify-center">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          SMTP Email Sender
-        </h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">SMTP Email Sender</h1>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           {Object.keys(form).map((key) => (
