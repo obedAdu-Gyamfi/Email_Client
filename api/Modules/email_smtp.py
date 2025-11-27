@@ -107,19 +107,19 @@ def send_email(
             attach_list = _to_list(attachments)
             for path in attach_list:
                 try:
-                    
+                    fname = os.path.basename(path)
                     with open(path, "rb") as attachment:
                         part = MIMEBase("application", "octet-stream")
                         part.set_payload(attachment.read())
                         encoders.encode_base64(part)
-                        part.add_header("Content-Disposition", f'attachment; filename="{path}"')
+                        part.add_header("Content-Disposition", f'attachment; filename="{fname}"')
                         msg.attach(part)
                 except FileNotFoundError as e:
-                    print(f"{path} not Found!")
+                    print(f"{fname} not Found!")
                 except Exception as e:
                     print("[{}]{}".format(e.__class__.__name__, e))
         
         
        
         server.send_message(msg, from_addr=sender, to_addrs=recipients)
-        print(f"Email sent successfully to {recipients}")
+        #print(f"Email sent successfully to {recipients}")

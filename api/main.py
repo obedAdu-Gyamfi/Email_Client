@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from Modules.email_smtp import send_email
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
@@ -7,6 +9,14 @@ import os
 
 app = FastAPI(title= "SMTP Email Client")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+#app.add_middleware()
 
 class EmailRequest(BaseModel):
     sender: EmailStr
@@ -32,7 +42,6 @@ async def api_send_email(
     if attachments:
         for file in attachments:
             temp_path = f"/tmp/{file.filename}"
-            #fname = os.path.basename(temp_path)
             with open(temp_path, "wb") as f:
                 f.write(await file.read())
             attachment_paths.append(temp_path)
@@ -47,7 +56,7 @@ async def api_send_email(
             bcc=bcc,
             attachments=attachment_paths
         )
-        return {"status": "success", "message": f"Email sent to {receiver}"}
+        return JSONResponse(status_code=200, content={"status": "success", "message": f"Email sent to {receiver}"})
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
