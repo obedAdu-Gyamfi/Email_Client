@@ -61,7 +61,7 @@ export default function EmailSender() {
     <div>
       <div className="bg-blue-400 flex h-24">
         <img className="w-32 h-22" src={logo} alt="logo" />
-        <p className="text-3xl font-bold pt-5 text-white"> PATERMA-AG ENTERPRISE</p>
+        <p className="text-3xl font-bold pt-5 text-white"> PETERMA-AG ENTERPRISE</p>
       </div>
       <div className="min-h-screen bg-gray-100 p-8 flex justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
