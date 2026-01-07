@@ -5,7 +5,8 @@ from email.mime.image import MIMEImage
 from email import encoders
 import smtplib
 import os
-
+from dotenv import load_dotenv
+from pathlib import Path
 
 
 def send_email(
@@ -18,8 +19,10 @@ def send_email(
         attachments: list[str] | None = None,
         **extra_headers
         ):
+    base_path = Path(__file__).resolve().parent.parent.parent
+    load_dotenv(dotenv_path=base_path /".env")
 
-    password = os.environ.get("SMTP_PASSWORD")
+    password = os.getenv("SMTP_PASSWORD")
     if not password:
         raise RuntimeError("SMTP_PASSWORD environment variable is not set!")
     
@@ -101,8 +104,6 @@ def send_email(
         except Exception as e:
             print("[{}]{}".format(e.__class__.__name__, e))
 
-
-        
         if attachments:
             attach_list = _to_list(attachments)
             for path in attach_list:

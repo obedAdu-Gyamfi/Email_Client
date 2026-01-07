@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from Modules.email_smtp import send_email
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
-import os
+
 
 
 app = FastAPI(title= "SMTP Email Client")
@@ -16,7 +16,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-#app.add_middleware()
 
 class EmailRequest(BaseModel):
     sender: EmailStr
@@ -25,7 +24,6 @@ class EmailRequest(BaseModel):
     body: Optional[str] = None
     cc: Optional[List[str]] = None
     bcc: Optional[List[str]] = None
-    #attachments: Optional[UploadFile] = None
 
 
 @app.post("/send-email")
@@ -61,3 +59,8 @@ async def api_send_email(
         raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send email: {e}")
+    
+    
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
